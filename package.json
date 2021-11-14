@@ -4,6 +4,21 @@
   "description": "",
   "dependencies": {
     "express": "^4.17.1",
+    "mongoose": "^6.0.12",
     "serverless-http": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.11.6",
+    "nodemon": "^2.0.14",
+    "serverless": "^2.66.1",
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-offline": "^8.2.0"
+  },
+  "scripts": {
+    "offline": "tsc --build && nodemon server.js",
+    "sls:offline": "tsc --build && serverless offline start",
+    "deploy": "serverless deploy",
+    "watch": "tsc --watch"
   }
 }

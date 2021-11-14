@@ -5,8 +5,9 @@ service: my-aws-cuentas-api
 frameworkVersion: "2"
 
 custom:
-  usersTableName: "users-table-${self:provider.stage}"
-  cuentasTableName: "cuentas-table-${self:provider.stage}"
+  version: "v4"
+  usersTableName: "users-table-${self:custom.version}-${self:provider.stage}"
+  cuentasTableName: "cuentas-table-${self:custom.version}-${self:provider.stage}"
 
 provider:
   name: aws
@@ -57,25 +58,29 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: userId
             AttributeType: S
         KeySchema:
-          - AttributeName: id
+          - AttributeName: userId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:custom.usersTableName}
     CuentasTable:
-      Type: AWS:DynamoDB::Table
+      Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: cuentaId
             AttributeType: S
         KeySchema:
-          - AttributeName: id
+          - AttributeName: cuentaId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:custom.cuentasTableName}
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline

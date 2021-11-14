@@ -1,13 +1,31 @@
-const express = require("express");
-const UserUseCases = require("../../../application/use-cases/userUseCases");
+import express from 'express'
+import UserUseCases from '../../../application/use-cases/userUseCases';
 
-module.exports = (appContext) => {
+const userController = (appContext: any) => {
   const router = express.Router();
   const userUseCases = new UserUseCases(appContext);
 
+  router.get("/", async (req, res, next) => {
+    try {
+      const users = await userUseCases.getUsers();
+      res.json(users);
+    } catch (error) {
+      next(error);
+    }
+  });
+
   router.get("/:userId", async (req, res, next) => {
     try {
-      const data = await userUseCases.getUser(req.params.userId);
+      const data = await userUseCases.getUserById(req.params.userId);
+      res.json({ success: true, data: data });
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  router.get("/email/:email", async (req, res, next) => {
+    try {
+      const data = await userUseCases.getUserByEmail(req.params.email);
       res.json({ success: true, data: data });
     } catch (error) {
       next(error);
@@ -43,3 +61,5 @@ module.exports = (appContext) => {
 
   return router;
 };
+
+export default userController;

@@ -1,11 +1,11 @@
 "use strict";
 
 const serverless = require("serverless-http");
-const getApp = require("./src/infrastructure/webserver/load-routes");
+const { router } = require("./build/infrastructure/webserver/load-routes");
 
-const bootstrap = require("./src/infrastructure/config/bootstrap");
-const appContext = bootstrap();
+const bootstrap = require("./build/infrastructure/config/dynamoDbBootstrap");
+const appContext = bootstrap;
 
-const app = getApp(appContext);
+const app = router(appContext);
 
 module.exports.handler = serverless(app);
