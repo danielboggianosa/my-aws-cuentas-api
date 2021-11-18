@@ -3,12 +3,13 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { randomUUID } from 'crypto';
 import { UserModel } from '../../../domain/models/userModel';
 import IUserRepository from '../../../domain/repositories/IUserRepository';
+import dynamoDbClient from './dynamoDbClient';
 
 const USERS_TABLE = process.env.USERS_TABLE!;
 
 export default class UserRepository implements IUserRepository {
   private dynamoDbClient: DocumentClient;
-  constructor(dynamoDbClient: DocumentClient) {
+  constructor() {
     this.dynamoDbClient = dynamoDbClient;
   }
   async getUsers(): Promise<UserModel[]> {

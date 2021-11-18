@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var aws_sdk_1 = require("aws-sdk");
-var dynamoDbClientParams = {};
+const aws_sdk_1 = require("aws-sdk");
+const dynamoDbClientParams = {};
 // if (process.env.IS_OFFLINE) {
 //   console.log("Creating a local DynamoDB instance");
 //   dynamoDbClientParams.region = "localhost";

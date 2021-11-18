@@ -2,13 +2,14 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { randomId } from '../../utils/Utils';
 import { CuentaModel } from '../../../domain/models/cuentaModel';
 import ICuentasRepository from '../../../domain/repositories/ICuentasRepository';
+import dynamoDbClient from './dynamoDbClient';
 
 const CUENTAS_TABLE = process.env.CUENTAS_TABLE!;
 
 export default class CuentasRepository implements ICuentasRepository {
   private dynamoDbClient: DocumentClient;
 
-  constructor(dynamoDbClient: DocumentClient) {
+  constructor() {
     this.dynamoDbClient = dynamoDbClient;
   }
 

@@ -26,7 +26,7 @@ const cuentaController = (appContext: any) => {
 
   router.get("/usuario/:usuarioId", async (req, res, next) => {
     try {
-      const data = await cuentaUseCases.getCuentasByUsuario(req.params.usuarioId);
+      const data = await cuentaUseCases.getCuentasByUsuarioId(req.params.usuarioId);
       res.json({ success: true, data: data });
     } catch (error) {
       next(error);

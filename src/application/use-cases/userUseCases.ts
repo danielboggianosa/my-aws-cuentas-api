@@ -1,12 +1,13 @@
 import IUserRepository from '../../domain/repositories/IUserRepository'
 import { UserModel } from "../../domain/models/userModel";
+import { AppContext } from '../../infrastructure/config/AppContext';
 
 
 export default class UserUseCases {
   userRepository: IUserRepository;
 
-  constructor(appContext: any) {
-    this.userRepository = appContext.default.userRepository;
+  constructor(appContext: AppContext) {
+    this.userRepository = appContext.repositories.userRepository;
   }
 
   async getUserById(userId: string) {
