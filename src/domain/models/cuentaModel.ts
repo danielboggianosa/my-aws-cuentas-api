@@ -1,8 +1,9 @@
 export interface CuentaModel {
     cuentaId: string,
-    userId: string,
+    empresaId: string,
     banco: string,
     descripcion: string,
+    imageUrl: string,
     mantenimiento: number,
     moneda: string,
     nombre: string,
@@ -11,4 +12,6 @@ export interface CuentaModel {
     tarjeta: string,
     tipo: string,
     titular: string,
+    createdAt: Date,
+    updatedAt: Date
 }

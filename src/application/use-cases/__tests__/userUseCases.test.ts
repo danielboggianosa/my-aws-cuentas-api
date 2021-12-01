@@ -14,7 +14,8 @@ const userMockValue: UserModel = {
     username,
     password,
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    imageUrl: ""
 }
 
 const mockUserRepository: IUserRepository = {

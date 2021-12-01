@@ -1,14 +1,14 @@
 import { CuentaModel } from "../../domain/models/cuentaModel";
 import ICuentasRepository from "../../domain/repositories/ICuentasRepository";
-import { UserValidator } from "../../domain/validators/userValidator";
+import { EmpresaValidator } from "../../domain/validators/empresaValidator";
 import { AppContext } from "../../infrastructure/config/AppContext";
 
 export default class CuentaUseCases {
   cuentaRepository: ICuentasRepository;
-  userValidator: UserValidator;
+  empresaValidator: EmpresaValidator;
   constructor(appContext: AppContext) {
     this.cuentaRepository = appContext.repositories.cuentasRepository;
-    this.userValidator = new UserValidator(appContext.repositories.userRepository);
+    this.empresaValidator = new EmpresaValidator(appContext.repositories.userRepository);
   }
 
   async getCuentaById(cuentaId: string) {
@@ -29,7 +29,7 @@ export default class CuentaUseCases {
 
   async createCuenta(cuenta: CuentaModel) {
     try {
-      await this.userValidator.validateById(cuenta.userId);
+      await this.empresaValidator.validateById(cuenta.empresaId);
       return await this.cuentaRepository.createCuenta(cuenta);
     } catch (error: any) {
       throw new Error(error);

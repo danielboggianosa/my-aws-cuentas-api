@@ -7,4 +7,5 @@ export interface UserModel {
     password: string;
     createdAt: Date;
     updatedAt: Date;
+    imageUrl: string;
 }

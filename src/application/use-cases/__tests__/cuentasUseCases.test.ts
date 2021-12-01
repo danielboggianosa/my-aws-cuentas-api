@@ -6,9 +6,10 @@ import { UserModel } from '../../../domain/models/userModel'
 
 const cuentaId = 'cuenta-uuid';
 const userId = 'user-uuid';
+const empresaId = 'empresa-uuid';
 const cuentaMockValue: CuentaModel = {
     cuentaId,
-    userId,
+    empresaId,
     nombre: 'Cuenta 1',
     tipo: 'ahorros',
     saldo: 1000,
@@ -18,7 +19,10 @@ const cuentaMockValue: CuentaModel = {
     moneda: 'USD',
     numero: '12343456789',
     tarjeta: '3847574388292',
-    titular: 'Test Owner'
+    titular: 'Test Owner',
+    imageUrl: '',
+    createdAt: new Date(),
+    updatedAt: new Date()
 }
 
 const userMockValue: UserModel = {
@@ -29,7 +33,8 @@ const userMockValue: UserModel = {
     username: '',
     password: '',
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    imageUrl: ''
 }
 
 const mockCuentasRepository: ICuentasRepository = {

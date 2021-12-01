@@ -9,25 +9,26 @@ const CUENTAS_TABLE = process.env.CUENTAS_TABLE!;
 export default class CuentasRepository implements ICuentasRepository {
   private dynamoDbClient: DocumentClient;
 
-  constructor() {
+  constructor(private tableName: string = CUENTAS_TABLE) {
     this.dynamoDbClient = dynamoDbClient;
   }
 
   async getCuentas(): Promise<CuentaModel[]> {
     const params: DocumentClient.ScanInput = {
-      TableName: CUENTAS_TABLE,
+      TableName: this.tableName,
       AttributesToGet: ['cuentaId', 'userId', 'banco', 'descripcion', 'mantenimiento', 'moneda', 'nombre', 'numero', 'saldo', 'tarjeta', 'tipo', 'titular'],
       Limit: 50,
     };
     const result = await this.dynamoDbClient.scan(params).promise();
     if (!result) {
-      throw new Error(`Tabla con nombre ${CUENTAS_TABLE} no encontrada`);
+      throw new Error(`Tabla con nombre ${this.tableName} no encontrada`);
     }
     return result.Items as CuentaModel[];
   }
+
   async getCuentasByUsuarioId(userId: string): Promise<CuentaModel[]> {
     const params: DocumentClient.QueryInput = {
-      TableName: CUENTAS_TABLE,
+      TableName: this.tableName,
       KeyConditionExpression: 'userId = :userId',
       ExpressionAttributeValues: {
         ':userId': userId
@@ -35,14 +36,14 @@ export default class CuentasRepository implements ICuentasRepository {
     };
     const result = await this.dynamoDbClient.query(params).promise();
     if (!result) {
-      throw new Error(`Tabla con nombre ${CUENTAS_TABLE} no encontrada`);
+      throw new Error(`Tabla con nombre ${this.tableName} no encontrada`);
     }
     return result.Items as CuentaModel[];
   }
 
   async getCuentaById(cuentaId: string): Promise<CuentaModel> {
     const params: DocumentClient.GetItemInput = {
-      TableName: CUENTAS_TABLE,
+      TableName: this.tableName,
       Key: { cuentaId },
     };
 
@@ -54,7 +55,7 @@ export default class CuentasRepository implements ICuentasRepository {
   }
 
   async createCuenta({
-    userId,
+    empresaId,
     banco,
     descripcion,
     mantenimiento,
@@ -68,10 +69,10 @@ export default class CuentasRepository implements ICuentasRepository {
   }: CuentaModel): Promise<CuentaModel> {
     const cuentaId = randomId();
     const params = {
-      TableName: CUENTAS_TABLE,
+      TableName: this.tableName,
       Item: {
         cuentaId,
-        userId,
+        empresaId,
         banco,
         descripcion,
         mantenimiento,
@@ -94,7 +95,7 @@ export default class CuentasRepository implements ICuentasRepository {
   }
 
   async updateCuenta(cuentaId: string, {
-    userId,
+    empresaId,
     banco,
     descripcion,
     mantenimiento,
@@ -107,12 +108,12 @@ export default class CuentasRepository implements ICuentasRepository {
     titular,
   }: CuentaModel): Promise<void> {
     const params = {
-      TableName: CUENTAS_TABLE,
+      TableName: this.tableName,
       Key: { cuentaId },
       UpdateExpression:
-        "set userId = :userId, banco = :banco, descripcion = :descripcion, mantenimiento = :mantenimiento, moneda = :moneda, nombre = :nombre, numero = :numero, saldo = :saldo, tarjeta = :tarjeta, tipo = :tipo, titular = :titular",
+        "set empresaId = :empresaId, banco = :banco, descripcion = :descripcion, mantenimiento = :mantenimiento, moneda = :moneda, nombre = :nombre, numero = :numero, saldo = :saldo, tarjeta = :tarjeta, tipo = :tipo, titular = :titular",
       ExpressionAttributeValues: {
-        ":userId": userId,
+        ":empresaId": empresaId,
         ":banco": banco,
         ":descripcion": descripcion,
         ":mantenimiento": mantenimiento,
@@ -136,7 +137,7 @@ export default class CuentasRepository implements ICuentasRepository {
 
   async deleteCuenta(cuentaId: string): Promise<void> {
     const params = {
-      TableName: CUENTAS_TABLE,
+      TableName: this.tableName,
       Key: { cuentaId },
     };
 

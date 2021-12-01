@@ -5,9 +5,13 @@ service: my-aws-cuentas-api
 frameworkVersion: "2"
 
 custom:
-  version: "v4"
-  usersTableName: "users-table-${self:custom.version}-${self:provider.stage}"
+  version: "v5"
+  categoriasTableName: "categorias-table-${self:custom.version}-${self:provider.stage}"
   cuentasTableName: "cuentas-table-${self:custom.version}-${self:provider.stage}"
+  empresasTableName: "empresas-table-${self:custom.version}-${self:provider.stage}"
+  registrosTableName: "registros-table-${self:custom.version}-${self:provider.stage}"
+  subcategoriasTableName: "subcategorias-table-${self:custom.version}-${self:provider.stage}"
+  usersTableName: "users-table-${self:custom.version}-${self:provider.stage}"
 
 provider:
   name: aws
@@ -26,7 +30,7 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource:
-            - Fn::GetAtt: [UsersTable, Arn]
+            - Fn::GetAtt: [CategoriasTable, Arn]
         - Effect: Allow
           Action:
             - dynamodb:Query
@@ -37,9 +41,53 @@ provider:
             - dynamodb:DeleteItem
           Resource:
             - Fn::GetAtt: [CuentasTable, Arn]
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [EmpresasTable, Arn]
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [RegistrosTable, Arn]
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [SubcategoriasTable, Arn]
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [UsersTable, Arn]
   environment:
-    USERS_TABLE: ${self:custom.usersTableName}
+    CATEGORIAS_TABLE: ${self:custom.categoriasTableName}
     CUENTAS_TABLE: ${self:custom.cuentasTableName}
+    EMPRESAS_TABLE: ${self:custom.empresasTableName}
+    REGISTROS_TABLE: ${self:custom.registrosTableName}
+    SUBCATEGORIAS_TABLE: ${self:custom.subcategoriasTableName}
+    USERS_TABLE: ${self:custom.usersTableName}
 
 functions:
   api:
@@ -54,19 +102,19 @@ functions:
 
 resources:
   Resources:
-    UsersTable:
+    CategoriasTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: userId
+          - AttributeName: cuentaId
             AttributeType: S
         KeySchema:
-          - AttributeName: userId
+          - AttributeName: cuentaId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: ${self:custom.usersTableName}
+        TableName: ${self:custom.categoriasTableName}
     CuentasTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -80,6 +128,58 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:custom.cuentasTableName}
+    EmpresasTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: cuentaId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: cuentaId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.empresasTableName}
+    RegistrosTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: cuentaId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: cuentaId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.registrosTableName}
+    SubcategoriasTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: cuentaId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: cuentaId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.subcategoriasTableName}
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.usersTableName}
 
 plugins:
   - serverless-dynamodb-local

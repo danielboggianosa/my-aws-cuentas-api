@@ -15,7 +15,8 @@ const mockUserValue: UserModel = {
     username,
     password,
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    imageUrl: ""
 }
 const mockUserRepository: IUserRepository = {
     getUsers: jest.fn().mockResolvedValue([mockUserValue]),
