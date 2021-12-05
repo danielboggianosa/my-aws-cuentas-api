@@ -1,15 +1,16 @@
 import express from 'express';
 import CuentaUseCases from '../../../application/use-cases/cuentaUseCases';
+import { AppContext } from '../../config/AppContext';
 
 
-const cuentaController = (appContext: any) => {
+const cuentaController = (appContext: AppContext) => {
   const router = express.Router();
   const cuentaUseCases = new CuentaUseCases(appContext);
 
   router.get("/", async (req, res, next) => {
     try {
-      const cuentas = await cuentaUseCases.getCuentas();
-      res.json(cuentas);
+      const data = await cuentaUseCases.getCuentas();
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }
@@ -18,7 +19,7 @@ const cuentaController = (appContext: any) => {
   router.get("/:cuentaId", async (req, res, next) => {
     try {
       const data = await cuentaUseCases.getCuentaById(req.params.cuentaId);
-      res.json({ success: true, data: data });
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }
@@ -27,7 +28,7 @@ const cuentaController = (appContext: any) => {
   router.get("/usuario/:usuarioId", async (req, res, next) => {
     try {
       const data = await cuentaUseCases.getCuentasByUsuarioId(req.params.usuarioId);
-      res.json({ success: true, data: data });
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }
@@ -36,7 +37,7 @@ const cuentaController = (appContext: any) => {
   router.post("/", async (req, res, next) => {
     try {
       const data = await cuentaUseCases.createCuenta(req.body);
-      res.json({ success: true, data: data });
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }
@@ -48,7 +49,7 @@ const cuentaController = (appContext: any) => {
         req.params.cuentaId,
         req.body
       );
-      res.json({ success: true, data: data });
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }
@@ -57,7 +58,7 @@ const cuentaController = (appContext: any) => {
   router.delete("/:cuentaId", async (req, res, next) => {
     try {
       const data = await cuentaUseCases.deleteCuenta(req.params.cuentaId);
-      res.json({ success: true, data: data });
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }

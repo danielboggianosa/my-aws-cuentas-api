@@ -7,8 +7,8 @@ const userController = (appContext: any) => {
 
   router.get("/", async (req, res, next) => {
     try {
-      const users = await userUseCases.getUsers();
-      res.json(users);
+      const data = await userUseCases.getUsers();
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }
@@ -17,7 +17,7 @@ const userController = (appContext: any) => {
   router.get("/:userId", async (req, res, next) => {
     try {
       const data = await userUseCases.getUserById(req.params.userId);
-      res.json({ success: true, data: data });
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }
@@ -26,7 +26,7 @@ const userController = (appContext: any) => {
   router.get("/email/:email", async (req, res, next) => {
     try {
       const data = await userUseCases.getUserByEmail(req.params.email);
-      res.json({ success: true, data: data });
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }
@@ -35,7 +35,7 @@ const userController = (appContext: any) => {
   router.post("/", async (req, res, next) => {
     try {
       const data = await userUseCases.createUser(req.body);
-      res.json({ success: true, data: data });
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }
@@ -44,7 +44,7 @@ const userController = (appContext: any) => {
   router.put("/:userId", async (req, res, next) => {
     try {
       const data = await userUseCases.updateUser(req.params.userId, req.body);
-      res.json({ success: true, data: data });
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }
@@ -53,7 +53,7 @@ const userController = (appContext: any) => {
   router.delete("/:userId", async (req, res, next) => {
     try {
       const data = await userUseCases.deleteUser(req.params.userId);
-      res.json({ success: true, data: data });
+      res.json({ success: true, data });
     } catch (error) {
       next(error);
     }

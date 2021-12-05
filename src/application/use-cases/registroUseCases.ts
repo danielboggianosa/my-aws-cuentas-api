@@ -1,11 +1,14 @@
 import { RegistroModel } from "../../domain/models/registroModel";
-import { IRegistroRepository } from "../../domain/repositories/IRegistroRepository";
+import ICuentasRepository from "../../domain/repositories/ICuentasRepository";
+import IRegistroRepository from "../../domain/repositories/IRegistroRepository";
 import { AppContext } from "../../infrastructure/config/AppContext";
 
 export default class RegistroUseCases {
     registroRepository: IRegistroRepository;
+    cuentaRespository: ICuentasRepository
     constructor(appContext: AppContext) {
         this.registroRepository = appContext.repositories.registroRepository;
+        this.cuentaRespository = appContext.repositories.cuentasRepository;
     }
 
     async getAllByCuentaId(cuentaId: string): Promise<RegistroModel[]> {
@@ -27,22 +30,25 @@ export default class RegistroUseCases {
 
     async create(registro: RegistroModel): Promise<RegistroModel> {
         try {
-            return await this.registroRepository.create(registro);
+            const result = await this.registroRepository.create(registro);
+            const cuenta = await this.cuentaRespository.getCuentaById(registro.cuentaId);
+            await this.cuentaRespository.updateCuenta(cuenta.cuentaId, { ...cuenta, saldo: cuenta.saldo + registro.monto });
+            return result;
         } catch (error: any) {
             throw new Error(error);
         }
     }
 
-    async update(registro: RegistroModel): Promise<RegistroModel> {
+    async update(registroId: string, registro: RegistroModel): Promise<RegistroModel> {
 
         try {
-            return await this.registroRepository.update(registro);
+            return await this.registroRepository.update(registroId, registro);
         } catch (error: any) {
             throw new Error(error);
         }
     }
 
-    async delete(registroId: string): Promise<RegistroModel> {
+    async delete(registroId: string): Promise<boolean> {
         try {
             return await this.registroRepository.delete(registroId);
         } catch (error: any) {

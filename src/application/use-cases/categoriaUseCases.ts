@@ -1,5 +1,5 @@
 import { CategoriaModel } from "../../domain/models/categoriaModel";
-import { ICategoriaRepository } from "../../domain/repositories/ICategoriaRepository";
+import ICategoriaRepository from "../../domain/repositories/ICategoriaRepository";
 import { AppContext } from "../../infrastructure/config/AppContext";
 
 export default class CategoriaUseCases {
@@ -8,9 +8,9 @@ export default class CategoriaUseCases {
         this.categoriasRepository = appContext.repositories.categoriaRepository;
     }
 
-    async getCategorias() {
+    async getCategoriasByCuentaId(cuentaId: string) {
         try {
-            return await this.categoriasRepository.getAll();
+            return await this.categoriasRepository.getAllByCuentaId(cuentaId);
         }
         catch (error: any) {
             throw new Error(error);
@@ -35,9 +35,9 @@ export default class CategoriaUseCases {
         }
     }
 
-    async updateCategoria(categoria: CategoriaModel) {
+    async updateCategoria(categoriaId: string, categoria: CategoriaModel) {
         try {
-            return await this.categoriasRepository.update(categoria);
+            return await this.categoriasRepository.update(categoriaId, categoria);
         }
         catch (error: any) {
             throw new Error(error);

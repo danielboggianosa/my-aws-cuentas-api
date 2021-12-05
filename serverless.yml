@@ -5,7 +5,7 @@ service: my-aws-cuentas-api
 frameworkVersion: "2"
 
 custom:
-  version: "v5"
+  version: "v6"
   categoriasTableName: "categorias-table-${self:custom.version}-${self:provider.stage}"
   cuentasTableName: "cuentas-table-${self:custom.version}-${self:provider.stage}"
   empresasTableName: "empresas-table-${self:custom.version}-${self:provider.stage}"
@@ -106,10 +106,10 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: cuentaId
+          - AttributeName: categoriaId
             AttributeType: S
         KeySchema:
-          - AttributeName: cuentaId
+          - AttributeName: categoriaId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
@@ -132,10 +132,10 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: cuentaId
+          - AttributeName: empresaId
             AttributeType: S
         KeySchema:
-          - AttributeName: cuentaId
+          - AttributeName: empresaId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
@@ -145,10 +145,10 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: cuentaId
+          - AttributeName: registroId
             AttributeType: S
         KeySchema:
-          - AttributeName: cuentaId
+          - AttributeName: registroId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
@@ -158,10 +158,10 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: cuentaId
+          - AttributeName: subcategoriaId
             AttributeType: S
         KeySchema:
-          - AttributeName: cuentaId
+          - AttributeName: subcategoriaId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1

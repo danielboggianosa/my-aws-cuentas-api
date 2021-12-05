@@ -27,17 +27,19 @@ export default class UserRepository implements IUserRepository {
   }
 
   async getUserByEmail(email: string): Promise<UserModel> {
-    const params: DynamoDB.DocumentClient.GetItemInput = {
+    const params: DynamoDB.DocumentClient.ScanInput = {
       TableName: USERS_TABLE,
-      Key: { email },
-      AttributesToGet: ["userId", "email", "firstName", "lastName", "createdAt", "updatedAt"],
+      FilterExpression: "email = :email",
+      ExpressionAttributeValues: { ":email": email },
+      Limit: 1
     };
 
-    const { Item } = await this.dynamoDbClient.get(params).promise();
-    if (!Item) {
-      throw new Error('No se pudo encontrar un usuario con el "email" provisto');
-    }
-    return Item as UserModel;
+    return await this.dynamoDbClient.scan(params).promise().then((data: DynamoDB.DocumentClient.ScanOutput) => {
+      if (!data.Items) {
+        throw new Error('No se pudo encontrar un usuario con el "email" provisto');
+      }
+      return data.Items[0] as UserModel;
+    });
   }
 
   getUserByUsername(username: string): Promise<UserModel> {
@@ -113,10 +115,10 @@ export default class UserRepository implements IUserRepository {
       Key: { userId },
     };
 
-    const { Attributes } = await this.dynamoDbClient.delete(params).promise();
-    if (!Attributes) {
-      throw new Error("No fue posible eliminar el usuario");
-    }
-    return;
+    return await this.dynamoDbClient.delete(params).promise()
+      .then(() => {
+        return;
+      })
+      .catch((err) => { throw new Error(err); });
   }
 };

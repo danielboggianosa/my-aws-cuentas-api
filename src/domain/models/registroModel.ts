@@ -1,7 +1,7 @@
 export interface RegistroModel {
     registroId: string;
     cuentaId: string;
-    fecha: Date;
+    fecha: string;
     monto: number;
     categoriaId: string;
     subcategoriaId: string;
@@ -9,4 +9,6 @@ export interface RegistroModel {
     entidad: string;
     imagenUrl: string;
     operacion: string;
+    createdAt: string;
+    updatedAt: string;
 }

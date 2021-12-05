@@ -71,3 +71,10 @@ reports/coverage/lcov-report/domain/validators/userValidator.ts.html
 reports/coverage/lcov-report/domain/validators/validationError.ts.html
 reports/coverage/lcov-report/infrastructure/config/AppContext.ts.html
 reports/coverage/lcov-report/infrastructure/webserver/controllers/userController.ts.html
+build/application/use-cases/cuentaUseCases.js
+build/application/use-cases/__tests__/cuentasUseCases.test.js
+build/application/use-cases/__tests__/userUseCases.test.js
+build/domain/validators/__tests__/userValidator.test.js
+build/infrastructure/repositories/dynamoDB/cuentasRepository.js
+build/infrastructure/repositories/dynamoDB/__tests__/cuentasRepository.test.js
+build/**/*.js

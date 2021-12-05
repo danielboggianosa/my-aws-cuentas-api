@@ -8,7 +8,7 @@ export default class CuentaUseCases {
   empresaValidator: EmpresaValidator;
   constructor(appContext: AppContext) {
     this.cuentaRepository = appContext.repositories.cuentasRepository;
-    this.empresaValidator = new EmpresaValidator(appContext.repositories.userRepository);
+    this.empresaValidator = new EmpresaValidator(appContext.repositories.empresaRepository);
   }
 
   async getCuentaById(cuentaId: string) {

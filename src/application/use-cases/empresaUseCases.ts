@@ -1,8 +1,10 @@
+import { EmpresaModel } from "../../domain/models/empresaModel";
 import IEmpresaRepository from "../../domain/repositories/IEmpresaRepository";
 import { AppContext } from "../../infrastructure/config/AppContext";
 
 export default class EmpresaUseCases {
     empresaRepository: IEmpresaRepository;
+
     constructor(appContext: AppContext) {
         this.empresaRepository = appContext.repositories.empresaRepository;
     }
@@ -25,7 +27,7 @@ export default class EmpresaUseCases {
         }
     }
 
-    async createEmpresa(empresa: any) {
+    async createEmpresa(empresa: EmpresaModel) {
         try {
             return await this.empresaRepository.createEmpresa(empresa);
         }
@@ -34,9 +36,9 @@ export default class EmpresaUseCases {
         }
     }
 
-    async updateEmpresa(empresa: any) {
+    async updateEmpresa(empresaId: string, empresa: EmpresaModel) {
         try {
-            return await this.empresaRepository.updateEmpresa(empresa);
+            return await this.empresaRepository.updateEmpresa(empresaId, empresa);
         }
         catch (error: any) {
             throw new Error(error);
