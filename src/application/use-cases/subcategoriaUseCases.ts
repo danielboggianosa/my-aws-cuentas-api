@@ -4,8 +4,8 @@ import { AppContext } from "../../infrastructure/config/AppContext";
 
 export default class SubcategoriaUseCases {
     subcategoriaRepository: ISubcategoriaRepository;
-    constructor(appContext: AppContext) {
-        this.subcategoriaRepository = appContext.repositories.subcategoriaRepository;
+    constructor({ repositories }: AppContext) {
+        this.subcategoriaRepository = repositories.subcategoriaRepository;
     }
 
     async getAllSubcategoryByCategoriaId(categoriaId: string) {

@@ -2,7 +2,7 @@ import CuentasUseCases from '../cuentaUseCases'
 import ICuentasRepository from '../../../domain/repositories/ICuentasRepository'
 import { CuentaModel } from '../../../domain/models/cuentaModel'
 import IUserRepository from '../../../domain/repositories/IUserRepository'
-import { UserModel } from '../../../domain/models/userModel'
+import { Role, UserModel } from '../../../domain/models/userModel'
 
 const cuentaId = 'cuenta-uuid';
 const userId = 'user-uuid';
@@ -21,8 +21,8 @@ const cuentaMockValue: CuentaModel = {
     tarjeta: '3847574388292',
     titular: 'Test Owner',
     imageUrl: '',
-    createdAt: new Date(),
-    updatedAt: new Date()
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
 }
 
 const userMockValue: UserModel = {
@@ -32,9 +32,10 @@ const userMockValue: UserModel = {
     email: '',
     username: '',
     password: '',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    imageUrl: ''
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    imageUrl: '', 
+    role: Role.USER
 }
 
 const mockCuentasRepository: ICuentasRepository = {
@@ -92,13 +93,13 @@ describe('CuentasUserCases', () => {
     })
 
     test('When crearCuenta is called, then createCuenta is called from the repository', async () => {
-        await cuentasUseCases.createCuenta(cuentaMockValue)
-        expect(mockCuentasRepository.createCuenta).toHaveBeenCalledWith(cuentaMockValue)
+        await cuentasUseCases.createCuenta(userId, cuentaMockValue)
+        expect(mockCuentasRepository.createCuenta).toHaveBeenCalledWith(userId, cuentaMockValue)
     })
 
     test('When crearCuenta is called and returns an error, then a new Error is thrown', () => {
         mockCuentasRepository.createCuenta = jest.fn().mockRejectedValue(new Error('Error'));
-        expect(cuentasUseCases.createCuenta(cuentaMockValue)).rejects.toThrow();
+        expect(cuentasUseCases.createCuenta(userId, cuentaMockValue)).rejects.toThrow();
     })
 
     test('When updateCuenta is called, then updateCuenta is called from the repository', async () => {

@@ -7,9 +7,9 @@ export class EmpresaValidator {
     constructor(empresaRepository: IEmpresaRepository) {
         this.empresaRepository = empresaRepository;
     }
-    async validateById(empresaId: string) {
+    async validateById(userId: string, empresaId: string) {
         try {
-            return await this.empresaRepository.getEmpresaById(empresaId);
+            return await this.empresaRepository.getEmpresaById(userId, empresaId);
         } catch (error: any) {
             throw new ValidationError(error.message);
         }

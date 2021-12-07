@@ -12,6 +12,8 @@ custom:
   registrosTableName: "registros-table-${self:custom.version}-${self:provider.stage}"
   subcategoriasTableName: "subcategorias-table-${self:custom.version}-${self:provider.stage}"
   usersTableName: "users-table-${self:custom.version}-${self:provider.stage}"
+  jwtSecret: "my-secret-key-${self:custom.version}-${self:provider.stage}"
+  jwtExpiration: "1h"
 
 provider:
   name: aws
@@ -88,6 +90,9 @@ provider:
     REGISTROS_TABLE: ${self:custom.registrosTableName}
     SUBCATEGORIAS_TABLE: ${self:custom.subcategoriasTableName}
     USERS_TABLE: ${self:custom.usersTableName}
+    SALT_ROUNDS: 15
+    JWT_SECRET: ${self:custom.jwtSecret}
+    JWT_EXPIRATION: ${self:custom.jwtExpiration}
 
 functions:
   api:

@@ -1,6 +1,6 @@
 import UserUseCases from "../userUseCases";
 import IUserRepository from "../../../domain/repositories/IUserRepository";
-import { UserModel } from "../../../domain/models/userModel";
+import { Role, UserModel } from "../../../domain/models/userModel";
 
 const userId = "user-uuid";
 const email = "test@email.com";
@@ -13,9 +13,10 @@ const userMockValue: UserModel = {
     email,
     username,
     password,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    imageUrl: ""
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    imageUrl: "",
+    role: Role.USER,
 }
 
 const mockUserRepository: IUserRepository = {

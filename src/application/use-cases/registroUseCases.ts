@@ -5,10 +5,11 @@ import { AppContext } from "../../infrastructure/config/AppContext";
 
 export default class RegistroUseCases {
     registroRepository: IRegistroRepository;
-    cuentaRespository: ICuentasRepository
-    constructor(appContext: AppContext) {
-        this.registroRepository = appContext.repositories.registroRepository;
-        this.cuentaRespository = appContext.repositories.cuentasRepository;
+    cuentaRespository: ICuentasRepository;
+
+    constructor({ repositories }: AppContext) {
+        this.registroRepository = repositories.registroRepository;
+        this.cuentaRespository = repositories.cuentasRepository;
     }
 
     async getAllByCuentaId(cuentaId: string): Promise<RegistroModel[]> {
@@ -30,10 +31,17 @@ export default class RegistroUseCases {
 
     async create(registro: RegistroModel): Promise<RegistroModel> {
         try {
-            const result = await this.registroRepository.create(registro);
             const cuenta = await this.cuentaRespository.getCuentaById(registro.cuentaId);
-            await this.cuentaRespository.updateCuenta(cuenta.cuentaId, { ...cuenta, saldo: cuenta.saldo + registro.monto });
-            return result;
+            console.log("saldo:", cuenta.saldo, "monto:", registro.monto);
+            if (!cuenta) throw new Error("Cuenta no encontrada");
+            if (cuenta.saldo < registro.monto) throw new Error("Saldo insuficiente");
+
+            const result = await this.registroRepository.create(registro);
+            if (!result) throw new Error("Error al crear registro");
+            else {
+                await this.cuentaRespository.updateCuenta(cuenta.cuentaId, { ...cuenta, saldo: cuenta.saldo + registro.monto });
+                return result;
+            }
         } catch (error: any) {
             throw new Error(error);
         }

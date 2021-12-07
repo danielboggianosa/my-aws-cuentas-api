@@ -12,6 +12,6 @@ export interface CuentaModel {
     tarjeta: string,
     tipo: string,
     titular: string,
-    createdAt: Date,
-    updatedAt: Date
+    createdAt: string,
+    updatedAt: string
 }

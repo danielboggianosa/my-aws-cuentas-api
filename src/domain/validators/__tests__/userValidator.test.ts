@@ -1,4 +1,4 @@
-import { UserModel } from "../../models/userModel";
+import { Role, UserModel } from "../../models/userModel";
 import IUserRepository from "../../repositories/IUserRepository";
 import { UserValidator } from "../userValidator";
 import { ValidationError } from "../validationError";
@@ -14,9 +14,10 @@ const mockUserValue: UserModel = {
     email,
     username,
     password,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    imageUrl: ""
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    imageUrl: "",
+    role: Role.USER,
 }
 const mockUserRepository: IUserRepository = {
     getUsers: jest.fn().mockResolvedValue([mockUserValue]),

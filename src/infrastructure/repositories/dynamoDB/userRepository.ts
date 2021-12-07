@@ -66,25 +66,30 @@ export default class UserRepository implements IUserRepository {
     return Item as UserModel;
   }
 
-  async createUser({ email, username, firstName, lastName, password }: UserModel): Promise<UserModel> {
+  async createUser({ email, username, firstName, lastName, password, role }: UserModel): Promise<UserModel> {
     const userId = randomUUID();
     const createdAt = new Date().toISOString();
+    const updatedAt = createdAt;
+    const Item: UserModel = {
+      userId,
+      email,
+      username,
+      firstName,
+      lastName,
+      password,
+      role,
+      createdAt,
+      updatedAt,
+      imageUrl: ''
+    }
     const params: DocumentClient.PutItemInput = {
       TableName: USERS_TABLE,
-      Item: {
-        userId,
-        email,
-        username,
-        firstName,
-        lastName,
-        password,
-        createdAt,
-      },
+      Item,
     };
 
     await this.dynamoDbClient.put(params).promise();
-    const Item = await this.getUserById(userId);
-    return Item as UserModel;
+    const result = await this.getUserById(userId);
+    return result as UserModel;
   }
 
   async updateUser(userId: string, { email, username, firstName, lastName }: UserModel): Promise<void> {

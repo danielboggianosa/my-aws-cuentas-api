@@ -5,8 +5,8 @@ import { AppContext } from "../../infrastructure/config/AppContext";
 export default class EmpresaUseCases {
     empresaRepository: IEmpresaRepository;
 
-    constructor(appContext: AppContext) {
-        this.empresaRepository = appContext.repositories.empresaRepository;
+    constructor({ repositories }: AppContext) {
+        this.empresaRepository = repositories.empresaRepository;
     }
 
     async getEmpresasByUserId(userId: string) {
@@ -18,9 +18,9 @@ export default class EmpresaUseCases {
         }
     }
 
-    async getEmpresaById(empresaId: string) {
+    async getEmpresaById(userId: string, empresaId: string) {
         try {
-            return await this.empresaRepository.getEmpresaById(empresaId);
+            return await this.empresaRepository.getEmpresaById(userId, empresaId);
         }
         catch (error: any) {
             throw new Error(error);

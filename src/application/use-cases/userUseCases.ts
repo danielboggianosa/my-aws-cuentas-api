@@ -6,8 +6,8 @@ import { AppContext } from '../../infrastructure/config/AppContext';
 export default class UserUseCases {
   userRepository: IUserRepository;
 
-  constructor(appContext: AppContext) {
-    this.userRepository = appContext.repositories.userRepository;
+  constructor({ repositories }: AppContext) {
+    this.userRepository = repositories.userRepository;
   }
 
   async getUserById(userId: string) {
@@ -28,7 +28,7 @@ export default class UserUseCases {
 
   async createUser(user: UserModel) {
     try {
-      const Item =  await this.userRepository.createUser(user);
+      const Item = await this.userRepository.createUser(user);
       return Item;
     } catch (error: any) {
       throw new Error(error);

@@ -17,8 +17,8 @@ const cuenta: CuentaModel = {
     tipo: "test",
     titular: "test-titular",
     imageUrl: "",
-    createdAt: new Date(),
-    updatedAt: new Date()
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
 }
 const version = 'v4'
 const stage = 'dev'

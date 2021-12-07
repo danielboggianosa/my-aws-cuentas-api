@@ -34,9 +34,9 @@ const cuentaController = (appContext: AppContext) => {
     }
   });
 
-  router.post("/", async (req, res, next) => {
+  router.post("/", async (req: any, res, next) => {
     try {
-      const data = await cuentaUseCases.createCuenta(req.body);
+      const data = await cuentaUseCases.createCuenta(req._user.userId, req.body);
       res.json({ success: true, data });
     } catch (error) {
       next(error);

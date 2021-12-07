@@ -19,19 +19,26 @@ export default class EmpresaRepository implements IEmpresaRepository {
                 ':userId': userId
             }
         };
-        const result = await this.dynamoDbClient.scan(params).promise();
-        return result.Items as EmpresaModel[];
+        return await this.dynamoDbClient.scan(params)
+            .promise()
+            .then(({ Items }) => Items as EmpresaModel[])
+            .catch(err => { throw new Error(err) });
     }
 
-    async getEmpresaById(empresaId: string): Promise<EmpresaModel> {
-        const params = {
+    async getEmpresaById(userId: string, empresaId: string): Promise<EmpresaModel> {
+        const params: DocumentClient.ScanInput = {
             TableName: this.tableName,
-            Key: { empresaId }
+            FilterExpression: 'empresaId = :empresaId and userId = :userId',
+            ExpressionAttributeValues: {
+                ':empresaId': empresaId,
+                ':userId': userId
+            }
         };
 
-        const { Item } = await this.dynamoDbClient.get(params).promise();
-
-        return Item as EmpresaModel;
+        return await this.dynamoDbClient.scan(params)
+            .promise()
+            .then(({ Items }) => Items ? Items[0] as EmpresaModel : {} as EmpresaModel)
+            .catch(err => { throw new Error(err) });
     }
 
     async createEmpresa(empresa: EmpresaModel): Promise<EmpresaModel> {

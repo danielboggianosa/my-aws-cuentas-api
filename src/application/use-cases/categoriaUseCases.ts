@@ -4,8 +4,8 @@ import { AppContext } from "../../infrastructure/config/AppContext";
 
 export default class CategoriaUseCases {
     categoriasRepository: ICategoriaRepository;
-    constructor(appContext: AppContext) {
-        this.categoriasRepository = appContext.repositories.categoriaRepository;
+    constructor({ repositories }: AppContext) {
+        this.categoriasRepository = repositories.categoriaRepository;
     }
 
     async getCategoriasByCuentaId(cuentaId: string) {

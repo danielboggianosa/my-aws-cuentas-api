@@ -6,9 +6,9 @@ import { AppContext } from "../../infrastructure/config/AppContext";
 export default class CuentaUseCases {
   cuentaRepository: ICuentasRepository;
   empresaValidator: EmpresaValidator;
-  constructor(appContext: AppContext) {
-    this.cuentaRepository = appContext.repositories.cuentasRepository;
-    this.empresaValidator = new EmpresaValidator(appContext.repositories.empresaRepository);
+  constructor({ repositories }: AppContext) {
+    this.cuentaRepository = repositories.cuentasRepository;
+    this.empresaValidator = new EmpresaValidator(repositories.empresaRepository);
   }
 
   async getCuentaById(cuentaId: string) {
@@ -27,9 +27,9 @@ export default class CuentaUseCases {
     }
   }
 
-  async createCuenta(cuenta: CuentaModel) {
+  async createCuenta(userId: string, cuenta: CuentaModel) {
     try {
-      await this.empresaValidator.validateById(cuenta.empresaId);
+      await this.empresaValidator.validateById(userId, cuenta.empresaId);
       return await this.cuentaRepository.createCuenta(cuenta);
     } catch (error: any) {
       throw new Error(error);

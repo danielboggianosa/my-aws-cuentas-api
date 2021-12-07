@@ -5,7 +5,13 @@ export interface UserModel {
     email: string;
     username: string;
     password: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
     imageUrl: string;
+    role: string;
+}
+
+export enum Role {
+    ADMIN = 'admin',
+    USER = 'user',
 }
