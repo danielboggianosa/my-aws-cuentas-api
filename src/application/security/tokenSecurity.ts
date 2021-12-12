@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { ValidationError } from '../../domain/validators/validationError';
+import { statusCode, ValidationError } from '../../domain/validators/validationError';
 
 export default class TokenSecurity {
     constructor(
@@ -10,7 +10,7 @@ export default class TokenSecurity {
     async generate(data: any): Promise<string> {
         const token = await jwt.sign(data, this.secret, { expiresIn: this.exp });
         if (token) return token;
-        else throw new ValidationError("Token was not created");
+        else throw new ValidationError(statusCode.INTERNAL_SERVER_ERROR, "Token was not created");
     }
 
     async validate(token: string): Promise<any> {

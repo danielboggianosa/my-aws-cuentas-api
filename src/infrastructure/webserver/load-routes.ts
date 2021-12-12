@@ -27,7 +27,7 @@ const router = (appContext: any) => {
 
   app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
     console.error(err.stack);
-    res.status(500).json({
+    res.status(err.status || 500).json({
       success: false,
       message: err.message,
       stack: err.stack,

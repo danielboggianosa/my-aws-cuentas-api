@@ -1,5 +1,6 @@
+import { UserModel } from "../models/userModel";
 import IUserRepository from "../repositories/IUserRepository";
-import { ValidationError } from "./validationError";
+import { statusCode, ValidationError } from "./validationError";
 
 export class UserValidator {
     private userRepository: IUserRepository;
@@ -10,7 +11,17 @@ export class UserValidator {
         try {
             return await this.userRepository.getUserById(userId);
         } catch (error: any) {
-            throw new ValidationError(error.message);
+            throw new ValidationError(statusCode.CONFLICT, error.message);
         }
+    }
+
+    async userExists(userEmail: string) {
+        const user = await this.userRepository.getUserByEmail(userEmail)
+        if (user?.userId) throw new ValidationError(statusCode.CONFLICT, 'User email is in use')
+    }
+
+    async validateData(user: UserModel) {
+        if (!user.password || !user.email) throw new ValidationError(statusCode.BAD_REQUEST, 'Mandatory fields not provided')
+        await this.userExists(user.email)
     }
 }

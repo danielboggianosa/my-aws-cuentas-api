@@ -5,7 +5,7 @@ service: my-aws-cuentas-api
 frameworkVersion: "2"
 
 custom:
-  version: "v6"
+  version: "v8"
   categoriasTableName: "categorias-table-${self:custom.version}-${self:provider.stage}"
   cuentasTableName: "cuentas-table-${self:custom.version}-${self:provider.stage}"
   empresasTableName: "empresas-table-${self:custom.version}-${self:provider.stage}"

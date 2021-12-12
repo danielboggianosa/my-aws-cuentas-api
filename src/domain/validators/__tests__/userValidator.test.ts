@@ -1,7 +1,7 @@
 import { Role, UserModel } from "../../models/userModel";
 import IUserRepository from "../../repositories/IUserRepository";
 import { UserValidator } from "../userValidator";
-import { ValidationError } from "../validationError";
+import { statusCode, ValidationError } from "../validationError";
 
 const userId = "user-uuid";
 const email = "test@email.com";
@@ -40,7 +40,7 @@ describe('User Validator', () => {
     })
 
     test('When the repository responds with an error, then a new error is thrown', () => {
-        mockUserRepository.getUserById = jest.fn().mockRejectedValue(new ValidationError('Error'))
+        mockUserRepository.getUserById = jest.fn().mockRejectedValue(new ValidationError(statusCode.BAD_REQUEST, 'Error'))
         expect(() => userValidator.validateById('non-id')).rejects.toThrowError('Error')
     })
 })

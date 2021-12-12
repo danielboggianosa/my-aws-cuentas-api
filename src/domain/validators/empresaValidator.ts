@@ -1,6 +1,6 @@
 
 import IEmpresaRepository from "../repositories/IEmpresaRepository";
-import { ValidationError } from "./validationError";
+import { statusCode, ValidationError } from "./validationError";
 
 export class EmpresaValidator {
     private empresaRepository: IEmpresaRepository;
@@ -11,7 +11,7 @@ export class EmpresaValidator {
         try {
             return await this.empresaRepository.getEmpresaById(userId, empresaId);
         } catch (error: any) {
-            throw new ValidationError(error.message);
+            throw new ValidationError(statusCode.BAD_REQUEST, error.message);
         }
     }
 }
