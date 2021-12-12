@@ -90,7 +90,8 @@ provider:
     REGISTROS_TABLE: ${self:custom.registrosTableName}
     SUBCATEGORIAS_TABLE: ${self:custom.subcategoriasTableName}
     USERS_TABLE: ${self:custom.usersTableName}
-    SALT_ROUNDS: 15
+    SALT: 3d85cc3190873789b1bec2ed67f24612830ed9a46d491446f5ca295e783fac39157c543d3188ee655aac2f28309703a291c86846ccda153c813e4ce3edcd5c27
+    ITERATIONS: 100000
     JWT_SECRET: ${self:custom.jwtSecret}
     JWT_EXPIRATION: ${self:custom.jwtExpiration}
 
