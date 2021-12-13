@@ -22,7 +22,7 @@ export default class AuthSecurity {
     }
 
     async login({ email, password }: LoginUser): Promise<string> {
-        const user = await this.userRepository.getUserByEmail(email);
+        const user = await this.userRepository.getOneByEmail(email);
         if (!user) {
             throw new ValidationError(statusCode.NOT_FOUND, "User not found");
         }
@@ -51,7 +51,7 @@ export default class AuthSecurity {
         const password = await this.passwordSecurity.hashPassword(user.password);
         const createdAt = new Date().toISOString();
         const updatedAt = createdAt;
-        const newUser = await this.userRepository.createUser({
+        const newUser = await this.userRepository.create({
             ...user,
             role: Role.ADMIN,
             password,

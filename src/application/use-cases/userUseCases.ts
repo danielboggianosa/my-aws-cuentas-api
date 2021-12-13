@@ -12,7 +12,7 @@ export default class UserUseCases {
 
   async getUserById(userId: string) {
     try {
-      return await this.userRepository.getUserById(userId);
+      return await this.userRepository.getOneById(userId);
     } catch (error: any) {
       throw new Error(error);
     }
@@ -20,7 +20,7 @@ export default class UserUseCases {
 
   async getUsers() {
     try {
-      return await this.userRepository.getUsers();
+      return await this.userRepository.getAll();
     } catch (error: any) {
       throw new Error(error);
     }
@@ -28,7 +28,7 @@ export default class UserUseCases {
 
   async createUser(user: UserModel) {
     try {
-      const Item = await this.userRepository.createUser(user);
+      const Item = await this.userRepository.create(user);
       return Item;
     } catch (error: any) {
       throw new Error(error);
@@ -37,7 +37,7 @@ export default class UserUseCases {
 
   async updateUser(userId: string, user: UserModel) {
     try {
-      return await this.userRepository.updateUser(userId, user);
+      return await this.userRepository.update(userId, user);
     } catch (error: any) {
       throw new Error(error);
     }
@@ -45,7 +45,7 @@ export default class UserUseCases {
 
   async deleteUser(userId: string) {
     try {
-      return await this.userRepository.deleteUser(userId);
+      return await this.userRepository.delete(userId);
     } catch (error: any) {
       throw new Error(error);
     }
@@ -53,7 +53,7 @@ export default class UserUseCases {
 
   async getUserByEmail(email: string) {
     try {
-      return await this.userRepository.getUserByEmail(email);
+      return await this.userRepository.getOneByEmail(email);
     } catch (error: any) {
       throw new Error(error);
     }
@@ -61,7 +61,7 @@ export default class UserUseCases {
 
   async getUserByUsername(username: string) {
     try {
-      return await this.userRepository.getUserByUsername(username);
+      return await this.userRepository.getOneByUsername(username);
     } catch (error: any) {
       throw new Error(error);
     }
@@ -69,7 +69,7 @@ export default class UserUseCases {
 
   async getUserByUsernameOrEmail(usernameOrEmail: string) {
     try {
-      return await this.userRepository.getUserByUsernameOrEmail(
+      return await this.userRepository.getOneByUsernameOrEmail(
         usernameOrEmail
       );
     } catch (error: any) {
@@ -79,7 +79,7 @@ export default class UserUseCases {
 
   async getUserByUsernameOrEmailAndPassword(usernameOrEmail: string, password: string) {
     try {
-      return await this.userRepository.getUserByUsernameOrEmailAndPassword(
+      return await this.userRepository.getOneByUsernameOrEmailAndPassword(
         usernameOrEmail,
         password
       );

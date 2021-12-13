@@ -9,6 +9,7 @@ export interface UserModel {
     updatedAt: string;
     imageUrl: string;
     role: string;
+    empresaId?: string;
 }
 
 export enum Role {

@@ -1,5 +1,5 @@
 export interface CategoriaModel {
-    cuentaId: string;
+    empresaId: string;
     categoriaId: string;
     nombre: string;
 }

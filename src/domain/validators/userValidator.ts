@@ -9,14 +9,14 @@ export class UserValidator {
     }
     async validateById(userId: string) {
         try {
-            return await this.userRepository.getUserById(userId);
+            return await this.userRepository.getOneById(userId);
         } catch (error: any) {
             throw new ValidationError(statusCode.CONFLICT, error.message);
         }
     }
 
     async userExists(userEmail: string) {
-        const user = await this.userRepository.getUserByEmail(userEmail)
+        const user = await this.userRepository.getOneByEmail(userEmail)
         if (user?.userId) throw new ValidationError(statusCode.CONFLICT, 'User email is in use')
     }
 

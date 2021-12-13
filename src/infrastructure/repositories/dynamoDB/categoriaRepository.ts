@@ -63,7 +63,7 @@ export default class CategoriaRepository implements ICategoriaRepository {
             UpdateExpression: 'set nombre = :nombre, cuentaId = :cuentaId',
             ExpressionAttributeValues: {
                 ':nombre': categoria.nombre,
-                ':cuentaId': categoria.cuentaId
+                ':empresaId': categoria.empresaId
             },
             ReturnValues: 'ALL_NEW'
         }

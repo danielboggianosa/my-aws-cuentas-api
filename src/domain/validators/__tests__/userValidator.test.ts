@@ -20,15 +20,15 @@ const mockUserValue: UserModel = {
     role: Role.USER,
 }
 const mockUserRepository: IUserRepository = {
-    getUsers: jest.fn().mockResolvedValue([mockUserValue]),
-    getUserById: jest.fn().mockResolvedValue(mockUserValue),
-    createUser: jest.fn(),
-    updateUser: jest.fn(),
-    deleteUser: jest.fn(),
-    getUserByEmail: jest.fn().mockResolvedValue(mockUserValue),
-    getUserByUsername: jest.fn().mockResolvedValue(mockUserValue),
-    getUserByUsernameOrEmail: jest.fn().mockResolvedValue(mockUserValue),
-    getUserByUsernameOrEmailAndPassword: jest.fn().mockResolvedValue(mockUserValue)
+    getAll: jest.fn().mockResolvedValue([mockUserValue]),
+    getOneById: jest.fn().mockResolvedValue(mockUserValue),
+    create: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+    getOneByEmail: jest.fn().mockResolvedValue(mockUserValue),
+    getOneByUsername: jest.fn().mockResolvedValue(mockUserValue),
+    getOneByUsernameOrEmail: jest.fn().mockResolvedValue(mockUserValue),
+    getOneByUsernameOrEmailAndPassword: jest.fn().mockResolvedValue(mockUserValue)
 }
 
 describe('User Validator', () => {
@@ -40,7 +40,7 @@ describe('User Validator', () => {
     })
 
     test('When the repository responds with an error, then a new error is thrown', () => {
-        mockUserRepository.getUserById = jest.fn().mockRejectedValue(new ValidationError(statusCode.BAD_REQUEST, 'Error'))
+        mockUserRepository.getOneById = jest.fn().mockRejectedValue(new ValidationError(statusCode.BAD_REQUEST, 'Error'))
         expect(() => userValidator.validateById('non-id')).rejects.toThrowError('Error')
     })
 })

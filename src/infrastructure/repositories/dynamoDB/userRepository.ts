@@ -12,7 +12,7 @@ export default class UserRepository implements IUserRepository {
   constructor() {
     this.dynamoDbClient = dynamoDbClient;
   }
-  async getUsers(): Promise<UserModel[]> {
+  async getAll(): Promise<UserModel[]> {
     const params: DynamoDB.DocumentClient.ScanInput = {
       TableName: USERS_TABLE,
       AttributesToGet: ["userId", "email", "firstName", "lastName", "createdAt", "updatedAt"],
@@ -26,7 +26,7 @@ export default class UserRepository implements IUserRepository {
     return result.Items as UserModel[];
   }
 
-  async getUserByEmail(email: string): Promise<UserModel> {
+  async getOneByEmail(email: string): Promise<UserModel> {
     const params: DynamoDB.DocumentClient.ScanInput = {
       TableName: USERS_TABLE,
       FilterExpression: "email = :email",
@@ -42,17 +42,17 @@ export default class UserRepository implements IUserRepository {
     });
   }
 
-  getUserByUsername(username: string): Promise<UserModel> {
+  getOneByUsername(username: string): Promise<UserModel> {
     throw new Error('Method not implemented.');
   }
-  getUserByUsernameOrEmail(usernameOrEmail: string): Promise<UserModel> {
+  getOneByUsernameOrEmail(usernameOrEmail: string): Promise<UserModel> {
     throw new Error('Method not implemented.');
   }
-  getUserByUsernameOrEmailAndPassword(usernameOrEmail: string, password: string): Promise<UserModel> {
+  getOneByUsernameOrEmailAndPassword(usernameOrEmail: string, password: string): Promise<UserModel> {
     throw new Error('Method not implemented.');
   }
 
-  async getUserById(userId: string): Promise<UserModel> {
+  async getOneById(userId: string): Promise<UserModel> {
     const params: DynamoDB.DocumentClient.GetItemInput = {
       TableName: USERS_TABLE,
       Key: { userId },
@@ -66,7 +66,7 @@ export default class UserRepository implements IUserRepository {
     return Item as UserModel;
   }
 
-  async createUser({ email, username, firstName, lastName, password, role }: UserModel): Promise<UserModel> {
+  async create({ email, username, firstName, lastName, password, role, empresaId }: UserModel): Promise<UserModel> {
     const userId = randomUUID();
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
@@ -80,7 +80,8 @@ export default class UserRepository implements IUserRepository {
       role,
       createdAt,
       updatedAt,
-      imageUrl: ''
+      imageUrl: '',
+      empresaId
     }
     const params: DocumentClient.PutItemInput = {
       TableName: USERS_TABLE,
@@ -88,21 +89,23 @@ export default class UserRepository implements IUserRepository {
     };
 
     await this.dynamoDbClient.put(params).promise();
-    const result = await this.getUserById(userId);
+    const result = await this.getOneById(userId);
     return result as UserModel;
   }
 
-  async updateUser(userId: string, { email, username, firstName, lastName }: UserModel): Promise<void> {
+  async update(userId: string, { email, username, firstName, lastName, imageUrl }: UserModel): Promise<void> {
     const params = {
       TableName: USERS_TABLE,
       Key: { userId },
       UpdateExpression:
-        "set email = :email, username = :username, firstName = :firstName, lastName = :lastName",
+        "set email = :email, username = :username, firstName = :firstName, lastName = :lastName, imageUrl = :imageUrl, updatedAt = :updatedAt",
       ExpressionAttributeValues: {
         ":email": email,
         ":username": username,
         ":firstName": firstName,
         ":lastName": lastName,
+        ":imageUrl": imageUrl,
+        ":updatedAt": new Date().toISOString(),
       },
       ReturnValues: "ALL_NEW",
     };
@@ -114,7 +117,7 @@ export default class UserRepository implements IUserRepository {
     return;
   }
 
-  async deleteUser(userId: string): Promise<void> {
+  async delete(userId: string): Promise<void> {
     const params = {
       TableName: USERS_TABLE,
       Key: { userId },

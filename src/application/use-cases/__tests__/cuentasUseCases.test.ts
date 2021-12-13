@@ -48,15 +48,15 @@ const mockCuentasRepository: ICuentasRepository = {
 }
 
 const mockUserRepository: IUserRepository = {
-    getUsers: jest.fn(),
-    getUserById: jest.fn().mockResolvedValue(userMockValue),
-    createUser: jest.fn(),
-    updateUser: jest.fn(),
-    deleteUser: jest.fn(),
-    getUserByEmail: jest.fn(),
-    getUserByUsername: jest.fn(),
-    getUserByUsernameOrEmail: jest.fn(),
-    getUserByUsernameOrEmailAndPassword: jest.fn()
+    getAll: jest.fn(),
+    getOneById: jest.fn().mockResolvedValue(userMockValue),
+    create: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+    getOneByEmail: jest.fn(),
+    getOneByUsername: jest.fn(),
+    getOneByUsernameOrEmail: jest.fn(),
+    getOneByUsernameOrEmailAndPassword: jest.fn()
 }
 
 const mockAppContext: any = {
