@@ -1,8 +1,8 @@
 import CuentasUseCases from '../cuentaUseCases'
 import ICuentasRepository from '../../../domain/repositories/ICuentasRepository'
 import { CuentaModel } from '../../../domain/models/cuentaModel'
-import IUserRepository from '../../../domain/repositories/IUserRepository'
-import { Role, UserModel } from '../../../domain/models/userModel'
+import IUserRepository from '../../../users/domain/repository'
+import { Role, UserModel } from '../../../users/domain/model'
 
 const cuentaId = 'cuenta-uuid';
 const userId = 'user-uuid';

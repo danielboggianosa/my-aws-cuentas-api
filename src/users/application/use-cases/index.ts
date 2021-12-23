@@ -1,6 +1,6 @@
-import IUserRepository from '../../domain/repositories/IUserRepository'
-import { UserModel } from "../../domain/models/userModel";
-import { AppContext } from '../../infrastructure/config/AppContext';
+import IUserRepository from '../../domain/repository'
+import { UserModel } from "../../domain/model";
+import { AppContext } from '../../../infrastructure/config/AppContext';
 
 
 export default class UserUseCases {

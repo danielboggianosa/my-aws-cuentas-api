@@ -1,6 +1,6 @@
-import { Role, UserModel } from "../../models/userModel";
-import IUserRepository from "../../repositories/IUserRepository";
-import { UserValidator } from "../userValidator";
+import { Role, UserModel } from "../../../users/domain/model";
+import IUserRepository from "../../../users/domain/repository";
+import { UserValidator } from "../../../users/domain/validations";
 import { statusCode, ValidationError } from "../validationError";
 
 const userId = "user-uuid";

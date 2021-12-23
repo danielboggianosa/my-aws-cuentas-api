@@ -1,6 +1,6 @@
-import UserUseCases from "../userUseCases";
-import IUserRepository from "../../../domain/repositories/IUserRepository";
-import { Role, UserModel } from "../../../domain/models/userModel";
+import UserUseCases from "../../../users/application/use-cases";
+import IUserRepository from "../../../users/domain/repository";
+import { Role, UserModel } from "../../../users/domain/model";
 
 const userId = "user-uuid";
 const email = "test@email.com";

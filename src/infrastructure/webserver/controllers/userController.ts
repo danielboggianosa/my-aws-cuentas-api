@@ -1,5 +1,5 @@
 import express from 'express'
-import UserUseCases from '../../../application/use-cases/userUseCases';
+import UserUseCases from '../../../users/application/use-cases';
 
 const userController = (appContext: any) => {
   const router = express.Router();

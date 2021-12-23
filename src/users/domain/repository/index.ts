@@ -1,4 +1,4 @@
-import { UserModel } from "../models/userModel";
+import { UserModel } from "../model";
 
 export default interface IUserRepository {
     getAll(): Promise<UserModel[]>;

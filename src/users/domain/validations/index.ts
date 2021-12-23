@@ -1,6 +1,6 @@
-import { UserModel } from "../models/userModel";
-import IUserRepository from "../repositories/IUserRepository";
-import { statusCode, ValidationError } from "./validationError";
+import { UserModel } from "../model";
+import IUserRepository from "../repository";
+import { statusCode, ValidationError } from "../../../domain/validators/validationError";
 
 export class UserValidator {
     private userRepository: IUserRepository;

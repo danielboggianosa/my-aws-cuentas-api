@@ -1,9 +1,9 @@
 import { DynamoDB } from 'aws-sdk';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { randomUUID } from 'crypto';
-import { UserModel } from '../../../domain/models/userModel';
-import IUserRepository from '../../../domain/repositories/IUserRepository';
-import dynamoDbClient from './dynamoDbClient';
+import { UserModel } from '../../domain/model';
+import IUserRepository from '../../domain/repository';
+import dynamoDbClient from '../../../infrastructure/repositories/dynamoDB/dynamoDbClient';
 
 const USERS_TABLE = process.env.USERS_TABLE!;
 

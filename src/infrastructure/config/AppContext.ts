@@ -1,8 +1,8 @@
 "use strict";
 
-import UserRepository from '../repositories/dynamoDB/userRepository'
+import UserRepository from '../../users/infrastructure/repository'
 import CuentasRepository from '../repositories/dynamoDB/cuentasRepository';
-import IUserRepository from '../../domain/repositories/IUserRepository';
+import IUserRepository from '../../users/domain/repository';
 import ICuentasRepository from '../../domain/repositories/ICuentasRepository';
 import ICategoriaRepository from '../../domain/repositories/ICategoriaRepository';
 import CategoriaRepository from '../repositories/dynamoDB/categoriaRepository';

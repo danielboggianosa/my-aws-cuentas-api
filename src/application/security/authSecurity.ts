@@ -2,9 +2,9 @@ import TokenSecurity from "./tokenSecurity";
 import PasswordSecurity from "./passwordSecurity";
 import { statusCode, ValidationError } from "../../domain/validators/validationError";
 import { AppContext } from "../../infrastructure/config/AppContext";
-import IUserRepository from "../../domain/repositories/IUserRepository";
-import { Role, UserModel } from "../../domain/models/userModel";
-import { UserValidator } from "../../domain/validators/userValidator";
+import IUserRepository from "../../users/domain/repository";
+import { Role, UserModel } from "../../users/domain/model";
+import { UserValidator } from "../../users/domain/validations";
 
 export interface LoginUser { email: string; password: string; }
 
